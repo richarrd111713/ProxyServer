@@ -1,14 +1,15 @@
-/* Reset styles */
+/* Reset & base */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; width: 100%; font-family: sans-serif; }
 
 /* Toolbar */
 .toolbar {
-  display: flex; gap: 8px; padding: 10px; background: #2d2d2d; align-items: center;
+  display: flex; gap: 8px; padding: 10px;
+  background: #2d2d2d; align-items: center;
 }
 .toolbar input {
-  flex: 1; padding: 6px 8px; border: 1px solid #444; border-radius: 4px;
-  background: #333; color: #eee;
+  flex: 1; padding: 6px 8px; border: 1px solid #444;
+  border-radius: 4px; background: #333; color: #eee;
 }
 .toolbar button {
   padding: 6px 12px; border: none; border-radius: 4px;
@@ -17,30 +18,46 @@ html, body { height: 100%; width: 100%; font-family: sans-serif; }
 .toolbar button:hover { background: #555; }
 #loadStatus { font-size: 0.9em; color: #aaa; }
 
-/* Container fills viewport */
+/* Container */
 .container {
-  position: relative; flex: 1; height: calc(100% - 50px); overflow: hidden;
+  position: relative; flex: 1;
+  height: calc(100% - 50px); overflow: hidden;
 }
-#browserFrame { width: 100%; height: 100%; border: none; }
+
+/* Iframe */
+#browserFrame {
+  width: 100%; height: 100%; border: none;
+}
 
 /* Console panel */
 #consolePanel {
-  position: absolute; bottom: 0; left: 0; width: 100%; max-height: 40%;
-  background: #252526; display: flex; flex-direction: column;
-  transform: translateY(100%); transition: transform 0.3s ease-in-out;
+  position: absolute; bottom: 0; left: 0; width: 100%;
+  max-height: 40%; background: #252526;
+  display: flex; flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
 }
-#consolePanel.visible { transform: translateY(0); }
+#consolePanel.visible {
+  transform: translateY(0);
+}
 #consoleInput {
-  flex: 1; padding: 8px; border: 1px solid #444; background: #1e1e1e;
-  color: #eee; font-family: monospace; resize: vertical; min-height: 80px;
+  flex: 1; padding: 8px; border: 1px solid #444;
+  background: #1e1e1e; color: #eee; font-family: monospace;
+  resize: vertical; min-height: 80px;
 }
-.console-controls { display: flex; justify-content: flex-end; gap: 8px; padding: 8px; }
+.console-controls {
+  display: flex; justify-content: flex-end; gap: 8px;
+  padding: 8px;
+}
 .console-controls button {
   padding: 6px 12px; border: none; border-radius: 4px;
   background: #0e639c; color: #fff; cursor: pointer;
 }
-.console-controls button:hover { background: #1177c0; }
+.console-controls button:hover {
+  background: #1177c0;
+}
 #consoleOutput {
   padding: 8px; background: #1e1e1e; border-top: 1px solid #444;
-  font-family: monospace; color: #d4d4d4; overflow-y: auto; max-height: 150px;
+  font-family: monospace; color: #d4d4d4;
+  overflow-y: auto; max-height: 150px;
 }

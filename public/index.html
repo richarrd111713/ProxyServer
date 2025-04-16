@@ -2,22 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0"/>
   <title>Full Screen Proxy Browser</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
   <div class="toolbar">
-    <input type="text" id="urlInput" placeholder="https://example.com" />
+    <input type="text" id="urlInput"
+           placeholder="https://example.com"/>
     <button id="goButton">Go</button>
     <span id="loadStatus">Status: Idle</span>
     <button id="toggleConsole">Console</button>
   </div>
 
   <div class="container">
-    <iframe id="browserFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
-    <div id="consolePanel">
-      <textarea id="consoleInput" placeholder="// type JS here…"></textarea>
+    <!-- srcdoc + sandbox for same‑origin JS eval -->
+    <iframe id="browserFrame"
+            sandbox="allow-scripts allow-forms allow-same-origin"
+            srcdoc=""
+    ></iframe>
+
+    <div id="consolePanel" class="hidden">
+      <textarea id="consoleInput"
+                placeholder="// type JS here…"></textarea>
       <div class="console-controls">
         <button id="runButton">Run</button>
         <button id="closeConsole">Close</button>
