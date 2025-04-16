@@ -1,5 +1,5 @@
 // Point to your Worker domain
-const PROXY_BASE = 'https://<your‑worker‑name>.<account>.workers.dev';
+const PROXY_BASE = 'https://ancient-wildflower-e432.segundoazjustin633.workers.dev';
 
 const goBtn         = document.getElementById('goButton');
 const urlInput      = document.getElementById('urlInput');
