@@ -1,4 +1,4 @@
-// Use the full origin so the proxy always targets your function
+// 1) Make PROXY_BASE absolute so it always points at your function
 const PROXY_BASE = window.location.origin + '/api/proxy';
 
 const goBtn         = document.getElementById('goButton');
@@ -17,33 +17,41 @@ function setConsoleVisible(yes) {
 }
 
 goBtn.addEventListener('click', async () => {
-  let url = urlInput.value.trim();
-  if (!url) { alert('Enter a URL.'); return; }
-  if (!/^https?:\/\//i.test(url)) url = 'http://' + url;
-
+  let target = urlInput.value.trim();
+  if (!target) { 
+    alert('Enter a URL.'); 
+    return; 
+  }
+  if (!/^https?:\/\//i.test(target)) {
+    target = 'http://' + target;
+  }
+  
   loadStatus.textContent = 'Loading…';
   try {
-    const res = await fetch(`${PROXY_BASE}?url=${encodeURIComponent(url)}`, {
-      credentials: 'include',
-      mode: 'cors'
-    });
-    if (!res.ok) throw new Error(`Status ${res.status}`);
+    const res = await fetch(
+      `${PROXY_BASE}?url=${encodeURIComponent(target)}`,
+      { credentials: 'include', mode: 'cors' }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const html = await res.text();
-    // Use srcdoc so <base> tags injected by the function work
+
+    // 2) Use srcdoc to inject only into the iframe
     iframe.srcdoc = html;
+
     loadStatus.textContent = 'Loaded';
   } catch (err) {
     loadStatus.textContent = 'Error';
-    alert('Error loading page: ' + err);
+    alert('Load failed: ' + err);
   }
 });
 
+// Console toggles
 toggleConsole.addEventListener('click', () =>
-  setConsoleVisible(!document.getElementById('consolePanel')
-                          .classList.contains('visible'))
+  setConsoleVisible(!iframe.classList.contains('visible'))
 );
 closeConsole.addEventListener('click', () => setConsoleVisible(false));
 
+// Run JS inside the iframe
 runBtn.addEventListener('click', () => {
   try {
     const result = iframe.contentWindow.eval(consoleInput.value);
