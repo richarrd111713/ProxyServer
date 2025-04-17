@@ -1,5 +1,5 @@
-// Now we point at our Pages function:
-const PROXY_BASE = '/api/proxy';
+// Use the full origin so the proxy always targets your function
+const PROXY_BASE = window.location.origin + '/api/proxy';
 
 const goBtn         = document.getElementById('goButton');
 const urlInput      = document.getElementById('urlInput');
@@ -20,14 +20,16 @@ goBtn.addEventListener('click', async () => {
   let url = urlInput.value.trim();
   if (!url) { alert('Enter a URL.'); return; }
   if (!/^https?:\/\//i.test(url)) url = 'http://' + url;
-  loadStatus.textContent = 'Loading…';
 
+  loadStatus.textContent = 'Loading…';
   try {
     const res = await fetch(`${PROXY_BASE}?url=${encodeURIComponent(url)}`, {
-      credentials: 'include', mode: 'cors'
+      credentials: 'include',
+      mode: 'cors'
     });
-    if (!res.ok) throw new Error(res.status);
+    if (!res.ok) throw new Error(`Status ${res.status}`);
     const html = await res.text();
+    // Use srcdoc so <base> tags injected by the function work
     iframe.srcdoc = html;
     loadStatus.textContent = 'Loaded';
   } catch (err) {
@@ -37,7 +39,8 @@ goBtn.addEventListener('click', async () => {
 });
 
 toggleConsole.addEventListener('click', () =>
-  setConsoleVisible(!document.getElementById('consolePanel').classList.contains('visible'))
+  setConsoleVisible(!document.getElementById('consolePanel')
+                          .classList.contains('visible'))
 );
 closeConsole.addEventListener('click', () => setConsoleVisible(false));
 
